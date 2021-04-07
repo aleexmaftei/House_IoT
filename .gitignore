@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+## File-based project format:
+*.iws
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+
+.idea
+/cmake-build-debug/
