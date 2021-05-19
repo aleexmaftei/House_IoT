@@ -5,8 +5,9 @@
 #include "../../common/baseRoute.h"
 #include "../../models/automaticDoorLockModel.h"
 
-class automaticDoorLockModel final : public baseRoute {
+class automaticDoorLockHandler final : public baseRoute {
     automaticDoorLockModel doorLock;
+    Lock doorLockMutex;
 
     void setupHandlerRoutes(Router &) override;
 
@@ -18,4 +19,4 @@ public:
     explicit automaticDoorLockHandler(Router &);
 };
 
-#endif
+#endif //HOUSE_IOT_AUTOMATICDOORLOCKHANDLER_H
