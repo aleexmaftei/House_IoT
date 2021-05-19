@@ -14,6 +14,12 @@ protected:
     using Lock = mutex;
     using Guard = lock_guard<Lock>;
 
+    // Json format server response
+    json jsonResponse;
+
+    // Compute a new ID
+    string computeNewGuid() { return xg::newGuid(); }
+
     /// must be implemented because it defines the HTTP request routes per handler
     virtual void setupHandlerRoutes(Router &) = 0;
 };

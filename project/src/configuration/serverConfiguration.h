@@ -8,9 +8,13 @@
 #include <utility>
 #include <pistache/endpoint.h>
 #include <pistache/router.h>
+#include "../../lib/nlohmann/json.hpp"
+#include "../../lib/crossguid/include/crossguid/guid.hpp"
 
 using namespace std;
 using namespace Pistache;
+
+using json = nlohmann::json;
 
 // Class to startup the server
 class serverConfiguration final {
