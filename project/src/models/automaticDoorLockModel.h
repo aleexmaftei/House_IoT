@@ -29,12 +29,17 @@ public:
 
     void SetLockingTime(int hour, int minutes)
     {
-        if(hour >= 0 && hour <= 23 && minutes >= 0 && minutes <= 59)
+        if(hour >= 0 && hour <= 23)
         {
             automaticLockingTime.hour = hour;
+        }
+        else throw (hour);
+
+        if(minutes >= 0 && minutes <= 59)
+        {
             automaticLockingTime.minutes = minutes;
         }
-        else throw;
+        else throw (minutes);
     }
 
     string GetLockingTime() const

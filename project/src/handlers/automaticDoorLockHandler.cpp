@@ -83,7 +83,7 @@ void automaticDoorLockHandler::setLockTime(const Rest::Request &request, Http::R
 
         doorLock.SetLockingTime(h, m);
     }
-    catch (...) {
+    catch (int val) {
         jsonResponse = {
                 {"actionId", computeNewGuid()},
                 {"httpCode", Http::Code::Bad_Request},
