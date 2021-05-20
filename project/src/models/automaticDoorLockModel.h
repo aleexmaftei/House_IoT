@@ -29,44 +29,22 @@ public:
 
     void SetLockingTime(int hour, int minutes)
     {
-        if(hour >= 0 && hour <= 23)
+        if(hour >= 0 && hour <= 23 && minutes >= 0 && minutes <= 59)
         {
             automaticLockingTime.hour = hour;
-        }
-        else throw (hour);
-
-        if(minutes >= 0 && minutes <= 59)
-        {
             automaticLockingTime.minutes = minutes;
         }
-        else throw (minutes);
+        else throw(-100);
     }
 
     string GetLockingTime() const
     {
-        string timeString = "";
+        string time;
+        time = (automaticLockingTime.hour < 10) ? "0" + to_string(automaticLockingTime.hour) : to_string(automaticLockingTime.hour);
+        time += ":";
+        time = (automaticLockingTime.minutes < 10) ? "0" + to_string(automaticLockingTime.minutes) : to_string(automaticLockingTime.minutes);
 
-        if(automaticLockingTime.hour < 10)
-        {
-            timeString = timeString + "0" + to_string(automaticLockingTime.hour);
-        }
-        else
-        {
-            timeString = timeString + to_string(automaticLockingTime.hour);
-        }
-
-        timeString = timeString + ":";
-
-        if(automaticLockingTime.minutes < 10)
-        {
-            timeString = timeString + "0" + to_string(automaticLockingTime.minutes);
-        }
-        else
-        {
-            timeString = timeString + to_string(automaticLockingTime.minutes);
-        }
-
-        return timeString;
+        return time;
     }
 };
 
