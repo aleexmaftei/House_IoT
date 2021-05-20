@@ -40,9 +40,9 @@ public:
     string GetLockingTime() const
     {
         string time;
-        time = (automaticLockingTime.hour < 10) ? "0" + to_string(automaticLockingTime.hour) : to_string(automaticLockingTime.hour);
+        time += (automaticLockingTime.hour < 10) ? "0" + to_string(automaticLockingTime.hour) : to_string(automaticLockingTime.hour);
         time += ":";
-        time = (automaticLockingTime.minutes < 10) ? "0" + to_string(automaticLockingTime.minutes) : to_string(automaticLockingTime.minutes);
+        time += (automaticLockingTime.minutes < 10) ? "0" + to_string(automaticLockingTime.minutes) : to_string(automaticLockingTime.minutes);
 
         return time;
     }
