@@ -9,11 +9,6 @@ using namespace Rest;
 class baseRoute {
 
 protected:
-    // Create the lock which prevents concurrent editing of the same variable
-    // TODO: test daca trebuie per handler sau ajunge aici
-    using Lock = mutex;
-    using Guard = lock_guard<Lock>;
-
     // Json format server response
     json jsonResponse;
 

@@ -18,8 +18,6 @@ void curtainsHandler::openCurtains(const Rest::Request &request, Http::ResponseW
 
     string message = "Curtains are already fully opened.";
     if (curtains.getAreCurtainsClosed()) {
-        Guard guard(curtainsLock);
-
         curtains.setAreCurtainsClosed(false);
         message = "Curtains are now fully opened.";
     }
@@ -39,8 +37,6 @@ void curtainsHandler::closeCurtains(const Rest::Request &request, Http::Response
 
     string message = "Curtains are already fully closed.";
     if (!curtains.getAreCurtainsClosed()) {
-        Guard guard(curtainsLock);
-
         curtains.setAreCurtainsClosed(true);
         message = "Curtains are now fully closed.";
     }
