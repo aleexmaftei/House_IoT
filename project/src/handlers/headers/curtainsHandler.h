@@ -17,6 +17,8 @@ class curtainsHandler final : public baseRoute {
 
     void closeCurtains(const Rest::Request &, Http::ResponseWriter);
 
+    void openCurtainsByPercentage(const Rest::Request &, Http::ResponseWriter);
+
 public:
     explicit curtainsHandler(Router &);
 };
