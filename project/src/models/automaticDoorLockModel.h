@@ -11,16 +11,10 @@ private:
     {
         int hour;
         int minutes;
-
-        Time(int h, int m)
-        {
-            hour = h;
-            minutes = m;
-        }
     } Time;
 
     bool isLocked = false;
-    Time automaticLockingTime = Time(23, 0);
+    Time automaticLockingTime;
 
 public:
     void SetIsLocked(bool value)
@@ -33,43 +27,41 @@ public:
         return isLocked;
     }
 
-    bool SetLockingTime(int hour, int minutes)
+    void SetLockingTime(int hour, int minutes)
     {
         if(hour >= 0 && hour <= 23 && minutes >= 0 && minutes <= 59)
         {
-            automaticLockingTime = Time(hour, minutes);
-            return true;
+            automaticLockingTime.hour = hour;
+            automaticLockingTime.minutes = minutes;
         }
-        else false;
+        else throw;
     }
 
-    char* GetLockingTime()
+    string GetLockingTime() const
     {
-        char hourString[6];
-        char minutesString[2];
+        string timeString = "";
 
         if(automaticLockingTime.hour < 10)
         {
-            sprintf(hourString, "0%d", automaticLockingTime.hour);
+            timeString = timeString + "0" + to_string(automaticLockingTime.hour);
         }
         else
         {
-            sprintf(hourString, "%d", automaticLockingTime.hour);
+            timeString = timeString + to_string(automaticLockingTime.hour);
         }
+
+        timeString = timeString + ":";
 
         if(automaticLockingTime.minutes < 10)
         {
-            sprintf(minutesString, "0%d", automaticLockingTime.minutes);
+            timeString = timeString + "0" + to_string(automaticLockingTime.minutes);
         }
         else
         {
-            sprintf(minutesString, "%d", automaticLockingTime.minutes);
+            timeString = timeString + to_string(automaticLockingTime.minutes);
         }
 
-        strncat(hourString, ":");
-        strncat(hourString, minutesString);
-
-        return *hourString;
+        return timeString;
     }
 };
 
