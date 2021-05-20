@@ -6,8 +6,7 @@ automaticDoorLockHandler::automaticDoorLockHandler(Router &router)
 }
 
 
-void automaticDoorLockHandler::setupHandlerRoutes(Router &router)
-{
+void automaticDoorLockHandler::setupHandlerRoutes(Router &router) {
     Routes::Post(router, "/doorLock/unlock",
                  Routes::bind(&automaticDoorLockHandler::unlockDoor, this));
     Routes::Post(router, "/doorLock/lock",
@@ -34,10 +33,10 @@ void automaticDoorLockHandler::unlockDoor(const Rest::Request &request, Http::Re
     }
 
     jsonResponse = {
-            {"actionId", computeNewGuid()},
-            {"httpCode", Http::Code::Ok},
+            {"actionId",     computeNewGuid()},
+            {"httpCode",     Http::Code::Ok},
             {"isDoorLocked", doorLock.GetIsLocked()},
-            {"message", message}
+            {"message",      message}
     };
 
     response.send(Http::Code::Ok, jsonResponse.dump(2));
@@ -61,10 +60,10 @@ void automaticDoorLockHandler::lockDoor(const Rest::Request &request, Http::Resp
     }
 
     jsonResponse = {
-            {"actionId", computeNewGuid()},
-            {"httpCode", Http::Code::Ok},
+            {"actionId",     computeNewGuid()},
+            {"httpCode",     Http::Code::Ok},
             {"isDoorLocked", doorLock.GetIsLocked()},
-            {"message", message}
+            {"message",      message}
     };
 
     response.send(Http::Code::Ok, jsonResponse.dump(2));
@@ -87,7 +86,7 @@ void automaticDoorLockHandler::setLockTime(const Rest::Request &request, Http::R
         jsonResponse = {
                 {"actionId", computeNewGuid()},
                 {"httpCode", Http::Code::Bad_Request},
-                {"message", "Incorrect value for hour or minutes."}
+                {"message",  "Incorrect value for hour or minutes."}
         };
         response.send(Http::Code::Bad_Request, jsonResponse.dump(2));
     }
@@ -96,7 +95,7 @@ void automaticDoorLockHandler::setLockTime(const Rest::Request &request, Http::R
             {"actionId", computeNewGuid()},
             {"httpCode", Http::Code::Ok},
             {"lockTime", doorLock.GetLockingTime()},
-            {"message", "Door will automatically lock at " + doorLock.GetLockingTime()}
+            {"message",  "Door will automatically lock at " + doorLock.GetLockingTime()}
     };
 
     response.send(Http::Code::Ok, jsonResponse.dump(2));
