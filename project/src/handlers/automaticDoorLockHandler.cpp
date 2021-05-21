@@ -13,6 +13,8 @@ void automaticDoorLockHandler::setupHandlerRoutes(Router &router) {
                  Routes::bind(&automaticDoorLockHandler::lockDoor, this));
     Routes::Post(router, "/doorLock/setLockTime/:hour/:minutes",
                  Routes::bind(&automaticDoorLockHandler::setLockTime, this));
+    Routes::Post(router, "/doorLock/reset",
+                 Routes::bind(&automaticDoorLockHandler::resetLockTime, this));
 }
 
 void automaticDoorLockHandler::unlockDoor(const Rest::Request &request, Http::ResponseWriter response)
@@ -22,8 +24,6 @@ void automaticDoorLockHandler::unlockDoor(const Rest::Request &request, Http::Re
     string message;
     if(doorLock.GetIsLocked())
     {
-        // const Guard guard(doorLock_mutex);
-
         doorLock.SetIsLocked(false);
         message = "Unlocked entrance door.";
     }
@@ -53,8 +53,6 @@ void automaticDoorLockHandler::lockDoor(const Rest::Request &request, Http::Resp
     }
     else
     {
-        // const Guard guard(doorLock_mutex);
-
         doorLock.SetIsLocked(true);
         message = "Entrance door has been locked.";
     }
@@ -82,7 +80,7 @@ void automaticDoorLockHandler::setLockTime(const Rest::Request &request, Http::R
 
         doorLock.SetLockingTime(h, m);
     }
-    catch (int val) {
+    catch (...) {
         jsonResponse = {
                 {"actionId", computeNewGuid()},
                 {"httpCode", Http::Code::Bad_Request},
@@ -101,6 +99,21 @@ void automaticDoorLockHandler::setLockTime(const Rest::Request &request, Http::R
     response.send(Http::Code::Ok, jsonResponse.dump(2));
 }
 
+void automaticDoorLockHandler::resetLockTime(const Rest::Request &, Http::ResponseWriter response)
+{
+    response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+
+    doorLock.SetLockingTime(23, 0);
+
+    jsonResponse = {
+            {"actionId", computeNewGuid()},
+            {"httpCode", Http::Code::Ok},
+            {"lockTime", doorLock.GetLockingTime()},
+            {"message",  "Locking time has been reset. Door will automatically lock at " + doorLock.GetLockingTime()}
+    };
+
+    response.send(Http::Code::Ok, jsonResponse.dump(2));
+}
 
 
 

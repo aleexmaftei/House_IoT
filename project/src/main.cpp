@@ -2,6 +2,7 @@
 #include <csignal>
 #include "handlers/headers/curtainsHandler.h"
 #include "handlers/headers/automaticDoorLockHandler.h"
+#include "handlers/headers/morningAlarmHandler.h"
 
 using namespace std;
 
