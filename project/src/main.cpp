@@ -1,12 +1,13 @@
 
 #include <csignal>
 #include "handlers/headers/curtainsHandler.h"
+#include "handlers/headers/automaticDoorLockHandler.h"
 
 using namespace std;
 
 int main()
 {
-    // This code is needed for gracefull shutdown of the server when no longer needed.
+    // This code is needed for graceful shutdown of the server when no longer needed.
     sigset_t signals;
     if (sigemptyset(&signals) != 0
         || sigaddset(&signals, SIGTERM) != 0
