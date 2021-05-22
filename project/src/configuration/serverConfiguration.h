@@ -3,7 +3,6 @@
 
 
 #include <iostream>
-#include <mutex>
 #include <cstddef>
 #include <utility>
 #include <pistache/endpoint.h>

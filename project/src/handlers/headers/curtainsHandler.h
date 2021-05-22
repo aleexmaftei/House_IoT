@@ -7,7 +7,6 @@
 
 class curtainsHandler final : public baseRoute {
     curtainsModel curtains;
-    Lock curtainsLock;
 
     /// must have function
     void setupHandlerRoutes(Router &) override;
