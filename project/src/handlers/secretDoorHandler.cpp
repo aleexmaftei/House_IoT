@@ -13,6 +13,7 @@ void secretDoorHandler::setupHandlerRoutes(Router &router) {
 
 void secretDoorHandler::openSecretDoor(const Request &request, Http::ResponseWriter response) {
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    secretDoor = *secretDoor.readJsonData();
 
     try {
         auto requestBody = json::parse(request.body());
@@ -36,6 +37,8 @@ void secretDoorHandler::openSecretDoor(const Request &request, Http::ResponseWri
                     {"isSecretDoorOpen", secretDoor.getIsSecretDoorOpen()},
                     {"message",          message}
             };
+
+            secretDoor.writeJsonData();
 
             response.send(Http::Code::Ok, jsonResponse.dump(2));
         } else {
@@ -62,9 +65,10 @@ void secretDoorHandler::openSecretDoor(const Request &request, Http::ResponseWri
 
 void secretDoorHandler::closeSecretDoor(const Request &request, Http::ResponseWriter response) {
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    secretDoor = *secretDoor.readJsonData();
 
     string message = "Secret door is already closed.";
-    if (!secretDoor.getIsSecretDoorOpen()) {
+    if (secretDoor.getIsSecretDoorOpen()) {
         secretDoor.setIsSecretDoorOpen(false);
         message = "Secret door was closed.";
     }
@@ -75,6 +79,8 @@ void secretDoorHandler::closeSecretDoor(const Request &request, Http::ResponseWr
             {"isSecretDoorOpen", secretDoor.getIsSecretDoorOpen()},
             {"message",          message}
     };
+
+    secretDoor.writeJsonData();
 
     response.send(Http::Code::Ok, jsonResponse.dump(2));
 }
@@ -87,25 +93,25 @@ void secretDoorHandler::changeSecretDoorPin(const Request &request, Http::Respon
         if (requestBody.contains(std::string("pinCode")) && requestBody.contains(std::string("changePinCode")) &&
             requestBody.contains(std::string("newPinCode"))) {
 
-            string pinCodeString = requestBody["pinCode"];
-            string changePinCodeString = requestBody["changePinCode"];
-            string newPinCodeString = requestBody["newPinCode"];
+            auto pinCode = serverUtils::convertStringToNumber<unsigned>(requestBody["pinCode"]);
+            auto changePinCode = serverUtils::convertStringToNumber<unsigned>(requestBody["changePinCode"]);
+            auto newPinCode = serverUtils::convertStringToNumber<unsigned>(requestBody["newPinCode"]);
 
-            unsigned pinCode = stoul(pinCodeString);
-            unsigned changePinCode = stoul(changePinCodeString);
-            unsigned newPinCode = stoul(newPinCodeString);
+            secretDoor = *secretDoor.readJsonData();
 
             if (!secretDoor.isSecretDoorPinCorrect(pinCode) ||
                 !secretDoor.isChangeSecretDoorPinCorrect(changePinCode)) {
                 throw string("Wrong Door Pin or Wrong Change Pin Code!");
             }
 
-            secretDoor.setChangeSecretDoorPin(newPinCode);
+            secretDoor.setSecretDoorPin(newPinCode);
             jsonResponse = {
                     {"actionId", computeNewGuid()},
                     {"httpCode", Http::Code::Ok},
                     {"message",  "Secret door pin code was modified."}
             };
+
+            secretDoor.writeJsonData();
 
             response.send(Http::Code::Ok, jsonResponse.dump(2));
         } else {

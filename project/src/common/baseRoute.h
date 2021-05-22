@@ -3,6 +3,7 @@
 #define HOUSE_IOT_BASEROUTE_H
 
 #include "../configuration/serverConfiguration.h"
+#include "serverUtils.h"
 
 using namespace Rest;
 

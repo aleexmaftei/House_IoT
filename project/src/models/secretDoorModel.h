@@ -5,20 +5,38 @@
 
 class secretDoorModel {
 private:
-    bool isSecretDoorOpen = false;
-    inline static unsigned secretDoorPin = 1234;
-    inline static unsigned changeSecretDoorPin = 1234;
+    bool isSecretDoorOpen;
+    unsigned secretDoorPin;
+    unsigned changeSecretDoorPin;
 
 public:
     bool isSecretDoorPinCorrect(unsigned pinCode) const { return secretDoorPin == pinCode; }
 
     bool isChangeSecretDoorPinCorrect(unsigned changePinCode) const { return changeSecretDoorPin == changePinCode; }
 
-    void setChangeSecretDoorPin(unsigned changePinCode) { changeSecretDoorPin = changePinCode; }
+    void setSecretDoorPin(unsigned _secretDoorPin) { secretDoorPin = _secretDoorPin; }
 
     bool getIsSecretDoorOpen() const { return isSecretDoorOpen; }
 
     void setIsSecretDoorOpen(bool _isDoorOpen) { isSecretDoorOpen = _isDoorOpen; }
+
+    secretDoorModel *readJsonData() {
+        json data = serverUtils::readJson(secretDoorDataPath);
+        isSecretDoorOpen = data["isSecretDoorOpen"];
+        secretDoorPin = data["secretDoorPin"];
+        changeSecretDoorPin = data["changeSecretDoorPin"];
+
+        return this;
+    }
+
+    void writeJsonData() {
+        json data = {
+                {"isSecretDoorOpen",    isSecretDoorOpen},
+                {"secretDoorPin",       secretDoorPin},
+                {"changeSecretDoorPin", changeSecretDoorPin},
+        };
+        serverUtils::writeJson(secretDoorDataPath, data);
+    }
 };
 
 #endif

@@ -15,6 +15,7 @@ void curtainsHandler::setupHandlerRoutes(Router &router) {
 /// endpoints --- do NOT make them static
 void curtainsHandler::openCurtains(const Rest::Request &request, Http::ResponseWriter response) {
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    curtains = *curtains.readJsonData();
 
     string message = "Curtains are already fully opened.";
     if (curtains.getAreCurtainsClosed()) {
@@ -29,11 +30,13 @@ void curtainsHandler::openCurtains(const Rest::Request &request, Http::ResponseW
             {"message",           message}
     };
 
+    curtains.writeJsonData();
     response.send(Http::Code::Ok, jsonResponse.dump(2));
 }
 
 void curtainsHandler::closeCurtains(const Rest::Request &request, Http::ResponseWriter response) {
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    curtains = *curtains.readJsonData();
 
     string message = "Curtains are already fully closed.";
     if (!curtains.getAreCurtainsClosed()) {
@@ -48,11 +51,13 @@ void curtainsHandler::closeCurtains(const Rest::Request &request, Http::Response
             {"message",           message}
     };
 
+    curtains.writeJsonData();
     response.send(Http::Code::Ok, jsonResponse.dump(2));
 }
 
 void curtainsHandler::openCurtainsByPercentage(const Rest::Request &request, Http::ResponseWriter response) {
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+    curtains = *curtains.readJsonData();
 
     double curtainsOpenPercentage;
     auto value = request.param(":curtainsOpenPercentage");
@@ -99,5 +104,6 @@ void curtainsHandler::openCurtainsByPercentage(const Rest::Request &request, Htt
             {"message",  message}
     };
 
+    curtains.writeJsonData();
     response.send(Http::Code::Ok, jsonResponse.dump(2));
 }
