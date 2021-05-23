@@ -5,16 +5,16 @@
 #include "../../common/baseRoute.h"
 #include "../../models/morningAlarmModel.h"
 
-class morningAlarmHandler final : public baseRoute
-{
+class morningAlarmHandler final : public baseRoute {
     morningAlarmModel morningAlarm;
-    Lock morningAlarm_mutex;
 
     void setDismissable(const Rest::Request &, Http::ResponseWriter);
 
     void addAlarm(const Rest::Request &, Http::ResponseWriter);
 
-    void setUserinBed(const Rest::Request &, Http::ResponseWriter);
+    void removeAlarm(const Rest::Request &, Http::ResponseWriter);
+
+    void info(const Rest::Request &, Http::ResponseWriter);
 
     void setupHandlerRoutes(Router &) override;
 

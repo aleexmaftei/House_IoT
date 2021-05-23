@@ -18,6 +18,8 @@ class automaticDoorLockHandler final : public baseRoute {
 
     void resetLockTime(const Rest::Request &, Http::ResponseWriter);
 
+    void info(const Rest::Request &, Http::ResponseWriter);
+
 public:
     explicit automaticDoorLockHandler(Router &);
 };

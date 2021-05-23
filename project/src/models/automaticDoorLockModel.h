@@ -4,11 +4,9 @@
 
 #include "string.h"
 
-class automaticDoorLockModel
-{
+class automaticDoorLockModel {
 private:
-    typedef struct
-    {
+    typedef struct {
         int hour;
         int minutes;
     } Time;
@@ -17,34 +15,48 @@ private:
     Time automaticLockingTime;
 
 public:
-    void SetIsLocked(bool value)
-    {
+    void SetIsLocked(bool value) {
         isLocked = value;
     }
 
-    bool GetIsLocked() const
-    {
+    bool GetIsLocked() const {
         return isLocked;
     }
 
-    void SetLockingTime(int hour, int minutes)
-    {
-        if(hour >= 0 && hour <= 23 && minutes >= 0 && minutes <= 59)
-        {
+    void SetLockingTime(int hour, int minutes) {
+        if (hour >= 0 && hour <= 23 && minutes >= 0 && minutes <= 59) {
             automaticLockingTime.hour = hour;
             automaticLockingTime.minutes = minutes;
-        }
-        else throw(-100);
+        } else throw (-100);
     }
 
-    string GetLockingTime() const
-    {
+    string GetLockingTime() const {
         string time;
-        time += (automaticLockingTime.hour < 10) ? "0" + to_string(automaticLockingTime.hour) : to_string(automaticLockingTime.hour);
+        time += (automaticLockingTime.hour < 10) ? "0" + to_string(automaticLockingTime.hour) : to_string(
+                automaticLockingTime.hour);
         time += ":";
-        time += (automaticLockingTime.minutes < 10) ? "0" + to_string(automaticLockingTime.minutes) : to_string(automaticLockingTime.minutes);
+        time += (automaticLockingTime.minutes < 10) ? "0" + to_string(automaticLockingTime.minutes) : to_string(
+                automaticLockingTime.minutes);
 
         return time;
+    }
+
+    automaticDoorLockModel *readJsonData() {
+        json data = serverUtils::readJson(automaticDoorLockDataPath);
+        isLocked = data["isLocked"];
+        automaticLockingTime.hour = data["automaticLockingTime"]["hour"];
+        automaticLockingTime.minutes = data["automaticLockingTime"]["minutes"];
+
+        return this;
+    }
+
+    void writeJsonData() {
+        json data = {
+                {"isLocked",             isLocked},
+                {"automaticLockingTime", {{"hour", automaticLockingTime.hour}, {"minutes", automaticLockingTime.minutes}}}
+        };
+
+        serverUtils::writeJson(automaticDoorLockDataPath, data);
     }
 };
 
