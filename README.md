@@ -159,10 +159,10 @@ Run the server/application from CLion and then check the terminal for the server
 
 ## Team members: 
 
-**Dumitrescu Teodor** 
-**Maftei Ioan Alexandru**
-**Predescu Eduard Alexandru**
-**Toderica Bogdan Mihai**
-**Iliescu Andrei Catalin**
+* **Dumitrescu Teodor** 
+* **Maftei Ioan Alexandru**
+* **Predescu Eduard Alexandru**
+* **Toderica Bogdan Mihai**
+* **Iliescu Andrei Catalin**
 
 ---
