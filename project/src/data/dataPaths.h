@@ -6,6 +6,8 @@
 
 const static std::string secretDoorDataPath = "./project/src/data/secretDoorUserSettings.json";
 const static std::string curtainsDataPath = "./project/src/data/curtainsUserSettings.json";
+const static std::string windowsDataPath = "./project/src/data/windowsUserSettings.json";
+const static std::string lightsDataPath = "./project/src/data/automaticLightsUserSettings.json";
 
 const static std::string morningAlarmDataPath = "./project/src/data/morningAlarmSettings.json";
 const static std::string automaticDoorLockDataPath = "./project/src/data/automaticDoorLockSettings.json";

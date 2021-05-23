@@ -3,6 +3,8 @@
 #include "../handlers/headers/testConnectionHandler.h"
 #include "../handlers/headers/secretDoorHandler.h"
 #include "../handlers/headers/automaticDoorLockHandler.h"
+#include "../handlers/headers/windowsHandler.h"
+#include "../handlers/headers/automaticLightsHandler.h"
 #include "../handlers/headers/morningAlarmHandler.h"
 
 serverConfiguration::serverConfiguration(Address addr, size_t thr = 2) {
@@ -29,5 +31,4 @@ void serverConfiguration::initialiseHandlers() {
     curtainsHandler curtainsHandler(router);
     secretDoorHandler secretDoorHandler(router);
     automaticDoorLockHandler automaticDoorLockHandler(router);
-    morningAlarmHandler morningAlarmHandler(router);
 }
