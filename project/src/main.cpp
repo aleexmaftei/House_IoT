@@ -2,12 +2,12 @@
 #include <csignal>
 #include "handlers/headers/curtainsHandler.h"
 #include "handlers/headers/automaticDoorLockHandler.h"
+#include "configuration/mqttServerConfiguration.h"
 #include "handlers/headers/morningAlarmHandler.h"
 
 using namespace std;
 
-int main()
-{
+int main() {
     // This code is needed for graceful shutdown of the server when no longer needed.
     sigset_t signals;
     if (sigemptyset(&signals) != 0
@@ -30,21 +30,22 @@ int main()
     // Initialize the server
     serverConfiguration serverConfig(addr, thr);
 
-    // Initialise handlers that define what the server can do
+    // Initialise http handlers that define what the server can do
     serverConfig.initialiseHandlers();
 
-    // Start server
-    serverConfig.start();
+    // Start http server
+    serverConfig.startHttp();
+
+    // Start mqtt
+    json j = {};
+    mqttServerConfiguration::messageMqttWithNewProcess(true, nullptr, j);
 
     // Code that waits for the shutdown signal for the server
     int signal = 0;
     int status = sigwait(&signals, &signal);
-    if (status == 0)
-    {
+    if (status == 0) {
         std::cout << "received signal " << signal << std::endl;
-    }
-    else
-    {
+    } else {
         std::cerr << "sigwait returns " << status << std::endl;
     }
 

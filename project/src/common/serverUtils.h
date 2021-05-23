@@ -3,8 +3,9 @@
 #define HOUSE_IOT_SERVERUTILS_H
 
 #include <fstream>
+#include <iomanip>
 #include "../data/dataPaths.h"
-#include <iostream>
+#include "../../lib/nlohmann/json.hpp"
 
 class serverUtils {
 public:
@@ -14,23 +15,23 @@ public:
         return stoul(str);
     }
 
-    static json readJson(string fileName) {
-        ifstream fin(fileName);
-        string x;
+    static nlohmann::json readJson(const std::string fileName) {
+        std::ifstream fin(fileName);
+        std::string x;
         if (fin.is_open()) {
             while (!fin.eof()) {
-                string temp;
+                std::string temp;
                 fin >> temp;
                 x += temp;
             }
         }
-        json j = nlohmann::json::parse(x);
+        nlohmann::json j = nlohmann::json::parse(x);
         return j;
     }
 
-    static void writeJson(string fileName, json jsonToWrite) {
-        ofstream out(fileName);
-        out << setw(4) << jsonToWrite << '\n';
+    static void writeJson(const std::string fileName, const nlohmann::json jsonToWrite) {
+        std::ofstream out(fileName);
+        out << std::setw(4) << jsonToWrite << '\n';
     }
 };
 
