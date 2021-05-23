@@ -28,4 +28,5 @@ void serverConfiguration::initialiseHandlers() {
     curtainsHandler curtainsHandler(router);
     secretDoorHandler secretDoorHandler(router);
     automaticDoorLockHandler automaticDoorLockHandler(router);
+    automaticLightsHandler automaticLightsHandler(router);
 }
