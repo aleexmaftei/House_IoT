@@ -45,6 +45,7 @@ int main() {
     if (status == 0) {
         std::cout << "received signal " << signal << std::endl;
     } else {
+    {
         std::cerr << "sigwait returns " << status << std::endl;
     }
 

@@ -92,6 +92,7 @@ void automaticLightsHandler::changeColor(const Rest::Request &request, Http::Res
     } else {
         message = string("The lights are now on and the color was set to ") + lights.getColor();
     }
+    lights.setAreLightsOn(true);
 
     jsonResponse = {
             {"actionId", computeNewGuid()},
