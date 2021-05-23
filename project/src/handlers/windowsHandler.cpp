@@ -51,15 +51,16 @@ void windowsHandler::closeWindowsWithTemp(const Rest::Request &request, Http::Re
         if (tempScale == "F") {
             double maxTempInCelsius = (maxTemp - 32) / 1.8;
             double tempInCelsius = (temp - 32) / 1.8;
+            windowsLock.setInsidePrefTemperature(maxTempInCelsius);
             if (tempInCelsius >= 40 || maxTempInCelsius >= 40) {
-                throw string("In loc sa deschidem geamurile, nu doriti sa sunam la 112?");
+                throw string("Instead of opening the windows, shall we call 911?");
             }
             if (tempInCelsius >= maxTempInCelsius) {
                 windowsLock.setAreAllWindowsClosed(false);
             }
         } else if (tempScale == "C") {
             if (temp >= 40 || maxTemp >= 40) {
-                throw string("In loc sa deschidem geamurile, nu doriti sa sunam la 112?");
+                throw string("Instead of opening the windows, shall we call 911");
             }
             if (temp >= maxTemp) {
                 windowsLock.setAreAllWindowsClosed(false);
