@@ -48,7 +48,10 @@ void windowsHandler::closeWindowsWithTemp(const Rest::Request &request, Http::Re
         auto maxTemp = maxTempRequestString.as<unsigned>();
         auto tempScale = tempScaleRequestString.as<string>();
 
-        if (tempScale == "F") {
+        if (windowsLock.getIsRaining()) {
+            throw string ("It is raining outside! We can't open the windows!");
+        }
+        if (tempScale == "F" || tempScale == "f") {
             double maxTempInCelsius = (maxTemp - 32) / 1.8;
             double tempInCelsius = (temp - 32) / 1.8;
             windowsLock.setInsidePrefTemperature(maxTempInCelsius);
@@ -58,7 +61,7 @@ void windowsHandler::closeWindowsWithTemp(const Rest::Request &request, Http::Re
             if (tempInCelsius >= maxTempInCelsius) {
                 windowsLock.setAreAllWindowsClosed(false);
             }
-        } else if (tempScale == "C") {
+        } else if (tempScale == "C" || tempScale == "c") {
             if (temp >= 40 || maxTemp >= 40) {
                 throw string("Instead of opening the windows, shall we call 911");
             }
@@ -114,7 +117,16 @@ void windowsHandler::windowsWithRain(const Rest::Request &request, Http::Respons
 
     try {
         auto isRainingString = isRainingRequestString.as<string>();
-        bool isRaining = (isRainingString == "true" || isRainingString == "rain" || isRainingString == "isRaining");
+        bool isRaining;
+        if (isRainingString == "true" || isRainingString == "rain" || isRainingString == "isRaining") {
+            isRaining = true;
+        }
+        else if (isRainingString == "false" || isRainingString == "notRain" || isRainingString == "isNotRaining") {
+            isRaining = false;
+        }
+        else {
+            throw string("Accepted inputs: true, rain, isRaining");
+        }
 
         if (isRaining) {
             windowsLock.setAreAllWindowsClosed(true);
@@ -124,7 +136,16 @@ void windowsHandler::windowsWithRain(const Rest::Request &request, Http::Respons
             windowsLock.setIsRaining(false);
         }
 
-    } catch (...) {
+    }
+    catch (string &errorMessage) {
+        jsonResponse = {
+                {"errorId",  computeNewGuid()},
+                {"httpCode", Http::Code::Bad_Request},
+                {"message",  errorMessage}
+        };
+        response.send(Http::Code::Bad_Request, jsonResponse.dump(2));
+    }
+    catch (...) {
         jsonResponse = {
                 {"errorId",  computeNewGuid()},
                 {"httpCode", Http::Code::Bad_Request},
