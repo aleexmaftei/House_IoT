@@ -4,5 +4,6 @@
 
 const static string secretDoorDataPath = "./project/src/data/secretDoorUserSettings.json";
 const static string curtainsDataPath = "./project/src/data/curtainsUserSettings.json";
+const static string windowsDataPath = "./project/src/data/windowsUserSettings.json";
 
 #endif

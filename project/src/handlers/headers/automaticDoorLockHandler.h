@@ -7,7 +7,6 @@
 
 class automaticDoorLockHandler final : public baseRoute {
     automaticDoorLockModel doorLock;
-    Lock doorLock_mutex;
 
     void setupHandlerRoutes(Router &) override;
 

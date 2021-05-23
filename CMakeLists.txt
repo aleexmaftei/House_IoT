@@ -21,7 +21,8 @@ add_executable(House_IoT
         project/src/handlers/testConnectionHandler.cpp
         project/src/handlers/secretDoorHandler.cpp
         project/src/handlers/testConnectionHandler.cpp
-        project/src/handlers/automaticDoorLockHandler.cpp)
+        project/src/handlers/automaticDoorLockHandler.cpp
+        project/src/handlers/windowsHandler.cpp)
 
 target_link_libraries(House_IoT PkgConfig::Pistache)
 target_link_libraries(House_IoT PkgConfig::Mosquitto)
