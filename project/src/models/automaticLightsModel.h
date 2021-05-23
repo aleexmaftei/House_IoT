@@ -6,13 +6,15 @@
 class automaticLightsModel {
 private:
     bool areLightsOn;
-    bool color;
+    string color;
 public:
     void setAreLightsOn(bool value) { areLightsOn = value; }
-    void getAreLightsOn() const { return areLightsOn; }
+
+    bool getAreLightsOn() const { return areLightsOn; }
 
     void setColor(string value) { color = value; }
-    void getColor() const { return color; }
+
+    string getColor() const { return color; }
 
     automaticLightsModel *readJsonData() {
         json data = serverUtils::readJson(lightsDataPath);
@@ -25,7 +27,7 @@ public:
     void writeJsonData() {
         json data = {
                 {"areLightsOn", areLightsOn},
-                {"color", color}
+                {"color",       color}
         };
         serverUtils::writeJson(lightsDataPath, data);
     }

@@ -5,7 +5,7 @@
 #include "../../common/baseRoute.h"
 #include "../../models/automaticLightsModel.h"
 
-class automaticLights final : public baseRoute {
+class automaticLightsHandler final : public baseRoute {
     automaticLightsModel lights;
 
     void setupHandlerRoutes(Router &) override;

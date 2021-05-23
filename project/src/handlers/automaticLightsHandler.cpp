@@ -56,7 +56,7 @@ void automaticLightsHandler::turnOffLights(const Rest::Request &request, Http::R
 
 void automaticLightsHandler::changeColor(const Rest::Request &request, Http::ResponseWriter response) {
     response.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
-    lights = *lights.readJsonData;
+    lights = *lights.readJsonData();
 
     string color;
     auto value = request.param(":color");
@@ -64,25 +64,33 @@ void automaticLightsHandler::changeColor(const Rest::Request &request, Http::Res
     try {
         color = value.as<string>();
 
-        char *possibleColors[4] = {"blue", "red", "white", "green"};
+        string possibleColors[4] = {"blue", "red", "white", "green"};
 
         int ok = 0;
-        for (int i = 0; i< 4; i++) {
-            if (color == possibleColors[i]) { ok = 1; }
+        for (auto & possibleColor : possibleColors) {
+            if (color == possibleColor) { ok = 1; }
         }
 
-        if (!ok) { throw exception; }
+        if (!ok) { throw string("Colors must be blue, red, white or green!"); }
 
         lights.setColor(color);
 
     }
-    catch(...) {
+    catch (string &errorMessage) {
         jsonResponse = {
                 {"errorId",  computeNewGuid()},
                 {"httpCode", Http::Code::Bad_Request},
-                {"message",  "Parameter is not accepted!"}
+                {"message",  errorMessage}
         };
         response.send(Http::Code::Bad_Request, jsonResponse.dump(2));
+    }
+    catch (...) {
+        jsonResponse = {
+                {"errorId",          computeNewGuid()},
+                {"httpCode",         Http::Code::Internal_Server_Error},
+                {"exceptionMessage", "Something went wrong when processing the request!"}
+        };
+        response.send(Http::Code::Internal_Server_Error, jsonResponse.dump(2));
     }
 
 
