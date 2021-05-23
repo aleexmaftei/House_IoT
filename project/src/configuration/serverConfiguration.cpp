@@ -12,7 +12,7 @@ serverConfiguration::serverConfiguration(Address addr, size_t thr = 2) {
 }
 
 
-void serverConfiguration::start() {
+void serverConfiguration::startHttp() {
     // Initialise handlers based on router settings
     httpEndpoint->setHandler(router.handler());
     httpEndpoint->serveThreaded();
