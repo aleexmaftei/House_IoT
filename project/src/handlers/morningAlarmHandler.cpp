@@ -11,8 +11,6 @@ void morningAlarmHandler::setupHandlerRoutes(Router &router) {
                  Routes::bind(&morningAlarmHandler::setDismissable, this));
     Routes::Post(router, "/morningAlarm/addAlarm/:hour/:minutes/:duration",
                  Routes::bind(&morningAlarmHandler::addAlarm, this));
-    Routes::Post(router, "/morningAlarm/addAlarm/:hour/:minutes",
-                 Routes::bind(&morningAlarmHandler::addAlarm, this));
     Routes::Post(router, "/morningAlarm/removeAlarm/:hour/:minutes",
                  Routes::bind(&morningAlarmHandler::removeAlarm, this));
 }

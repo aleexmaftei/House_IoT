@@ -1,6 +1,16 @@
 {
     "alarmList": [
         {
+            "duration": 1,
+            "hour": 1,
+            "minutes": 1
+        },
+        {
+            "duration": 20,
+            "hour": 7,
+            "minutes": 30
+        },
+        {
             "duration": 30,
             "hour": 7,
             "minutes": 35
@@ -9,11 +19,6 @@
             "duration": 20,
             "hour": 7,
             "minutes": 40
-        },
-        {
-            "duration": 20,
-            "hour": 7,
-            "minutes": 30
         }
     ],
     "isDismissable": true,

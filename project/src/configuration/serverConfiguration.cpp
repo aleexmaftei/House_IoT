@@ -31,4 +31,6 @@ void serverConfiguration::initialiseHandlers() {
     curtainsHandler curtainsHandler(router);
     secretDoorHandler secretDoorHandler(router);
     automaticDoorLockHandler automaticDoorLockHandler(router);
+    morningAlarmHandler morningAlarmHandler(router);
+    windowsHandler windowsHandler(router);
 }
