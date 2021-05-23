@@ -2,8 +2,10 @@
 #ifndef HOUSE_IOT_DATAPATHS_H
 #define HOUSE_IOT_DATAPATHS_H
 
-const static string secretDoorDataPath = "./project/src/data/secretDoorUserSettings.json";
-const static string curtainsDataPath = "./project/src/data/curtainsUserSettings.json";
-const static string windowsDataPath = "./project/src/data/windowsUserSettings.json";
+#include<iostream>
+
+const static std::string secretDoorDataPath = "./project/src/data/secretDoorUserSettings.json";
+const static std::string curtainsDataPath = "./project/src/data/curtainsUserSettings.json";
+const static std::string lightsDataPath = "./project/src/data/automaticLightsUserSettings.json";
 
 #endif

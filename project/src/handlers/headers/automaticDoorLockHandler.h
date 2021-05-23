@@ -22,4 +22,4 @@ public:
     explicit automaticDoorLockHandler(Router &);
 };
 
-#endif //HOUSE_IOT_AUTOMATICDOORLOCKHANDLER_H
+#endif

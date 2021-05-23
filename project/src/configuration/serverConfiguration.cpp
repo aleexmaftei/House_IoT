@@ -4,6 +4,7 @@
 #include "../handlers/headers/secretDoorHandler.h"
 #include "../handlers/headers/automaticDoorLockHandler.h"
 #include "../handlers/headers/windowsHandler.h"
+#include "../handlers/headers/automaticLightsHandler.h"
 
 serverConfiguration::serverConfiguration(Address addr, size_t thr = 2) {
     httpEndpoint = std::make_shared<Http::Endpoint>(addr);
@@ -13,7 +14,7 @@ serverConfiguration::serverConfiguration(Address addr, size_t thr = 2) {
 }
 
 
-void serverConfiguration::start() {
+void serverConfiguration::startHttp() {
     // Initialise handlers based on router settings
     httpEndpoint->setHandler(router.handler());
     httpEndpoint->serveThreaded();
@@ -30,4 +31,5 @@ void serverConfiguration::initialiseHandlers() {
     secretDoorHandler secretDoorHandler(router);
     automaticDoorLockHandler automaticDoorLockHandler(router);
     windowsHandler windowsHandler(router);
+    automaticLightsHandler automaticLightsHandler(router);
 }
