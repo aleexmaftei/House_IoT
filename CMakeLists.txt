@@ -20,7 +20,6 @@ add_executable(House_IoT
         project/src/handlers/curtainsHandler.cpp
         project/src/handlers/testConnectionHandler.cpp
         project/src/handlers/secretDoorHandler.cpp
-        project/src/handlers/testConnectionHandler.cpp
         project/src/handlers/automaticDoorLockHandler.cpp
         project/src/handlers/windowsHandler.cpp)
 

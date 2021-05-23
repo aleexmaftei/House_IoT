@@ -19,6 +19,8 @@ class windowsHandler : public baseRoute {
 
     void windowsWithRain(const Rest::Request &, Http::ResponseWriter);
 
+    void getWindowsLockUserSettings(const Rest::Request &, Http::ResponseWriter);
+
 public:
     explicit windowsHandler(Router &);
 };

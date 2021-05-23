@@ -8,16 +8,20 @@
 class windowsModel {
 private:
     bool areAllWindowsClosed;
-    unsigned numberOfWindows;
+    bool isRaining;
     unsigned insidePrefTemperature;
 
 
 public:
     bool getAreAllWindowsClosed() const { return areAllWindowsClosed; }
 
+    bool getIsRaining() const { return isRaining; }
+
+    unsigned getInsidePrefTemperature() const { return insidePrefTemperature; }
+
     void setAreAllWindowsClosed(bool _areAllWindowsClosed) { areAllWindowsClosed = _areAllWindowsClosed; }
 
-    void setNumberOfWindows(int _numberOfWindows) { numberOfWindows = _numberOfWindows; }
+    void setIsRaining(bool _isRaining) { isRaining = _isRaining; }
 
     void setInsidePrefTemperature(double _insidePrefTemperature) { insidePrefTemperature = _insidePrefTemperature; }
 
@@ -25,7 +29,7 @@ public:
     windowsModel *readJsonData() {
         json data = serverUtils::readJson(windowsDataPath);
         areAllWindowsClosed = data["areAllWindowsClosed"];
-        numberOfWindows = data["numberOfWindows"];
+        isRaining = data["isRaining"];
         insidePrefTemperature = data["insidePrefTemperature"];
 
         return this;
@@ -34,7 +38,7 @@ public:
     void writeJsonData() {
         json data = {
                 {"areAllWindowsClosed",   areAllWindowsClosed},
-                {"numberOfWindows",       numberOfWindows},
+                {"isRaining",       isRaining},
                 {"insidePrefTemperature", insidePrefTemperature}
         };
         serverUtils::writeJson(windowsDataPath, data);

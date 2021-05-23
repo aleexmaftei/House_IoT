@@ -1,5 +1,5 @@
 {
-  "areAllWindowsClosed": true,
-  "insidePrefTemperature": 25,
-  "numberOfWindows": 6
+    "areAllWindowsClosed": true,
+    "insidePrefTemperature": 25,
+    "isRaining": false
 }
