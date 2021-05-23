@@ -63,7 +63,11 @@ void automaticLightsHandler::changeColor(const Rest::Request &request, Http::Res
 
     try {
         color = value.as<string>();
-
+        std::locale loc;
+        int k = 0;
+        for (char i : color) {
+            color[k++] = std::tolower(i, loc);
+        }
         string possibleColors[4] = {"blue", "red", "white", "green"};
 
         int ok = 0;
