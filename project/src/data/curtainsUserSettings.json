@@ -1,4 +1,4 @@
 {
-    "areCurtainsClosed": false,
-    "curtainsOpenPercentage": 1.5
+    "areCurtainsClosed": true,
+    "curtainsOpenPercentage": 0.0
 }

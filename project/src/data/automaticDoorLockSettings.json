@@ -1,7 +1,7 @@
 {
-  "isLocked": false,
-  "automaticLockingTime": {
-    "hour": 0,
-    "minutes": 0
-  }
+    "automaticLockingTime": {
+        "hour": 23,
+        "minutes": 0
+    },
+    "isLocked": false
 }
