@@ -47,6 +47,10 @@ mqttServerConfiguration::startMqttPublisher(bool useDefaultMqttMessages, const c
         mosquitto_publish(mqttConnection, nullptr, "secretDoor/isSecretDoorOpen", message.size(), message.c_str(),
                           0, true);
 
+        // check if entrance door is unlocked
+        message = serverUtils::readJson(automaticDoorLockDataPath)["isLocked"].dump();
+        mosquitto_publish(mqttConnection, nullptr, "automaticDoorLock/isLocked", message.size(), message.c_str(),
+                          0, true);
     } else {
         /// custom actions
         if (topic == NULL) {
