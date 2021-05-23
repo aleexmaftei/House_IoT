@@ -1,3 +1,4 @@
 {
-  "areLightsOn": true
+ 	"areLightsOn": true,
+ 	"color": "red"
 }
