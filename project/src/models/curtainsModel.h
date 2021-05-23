@@ -4,8 +4,8 @@
 
 class curtainsModel {
 private:
-    bool areCurtainsClosed = false;
-    double curtainsOpenPercentage = 0.0;
+    bool areCurtainsClosed;
+    double curtainsOpenPercentage;
 public:
     void setAreCurtainsClosed(bool value) { areCurtainsClosed = value; }
 
@@ -14,6 +14,22 @@ public:
     void setCurtainsOpenPercentage(double _curtainsOpenPercentage) { curtainsOpenPercentage = _curtainsOpenPercentage; }
 
     double getCurtainsOpenPercentage() const { return curtainsOpenPercentage; }
+
+    curtainsModel *readJsonData() {
+        json data = serverUtils::readJson(curtainsDataPath);
+        areCurtainsClosed = data["areCurtainsClosed"];
+        curtainsOpenPercentage = data["curtainsOpenPercentage"];
+
+        return this;
+    }
+
+    void writeJsonData() {
+        json data = {
+                {"areCurtainsClosed",      areCurtainsClosed},
+                {"curtainsOpenPercentage", curtainsOpenPercentage}
+        };
+        serverUtils::writeJson(curtainsDataPath, data);
+    }
 };
 
 #endif

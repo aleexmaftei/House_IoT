@@ -1,6 +1,7 @@
 #include "serverConfiguration.h"
 #include "../handlers/headers/curtainsHandler.h"
 #include "../handlers/headers/testConnectionHandler.h"
+#include "../handlers/headers/secretDoorHandler.h"
 #include "../handlers/headers/automaticDoorLockHandler.h"
 #include "../handlers/headers/morningAlarmHandler.h"
 
@@ -26,6 +27,7 @@ void serverConfiguration::stop() {
 void serverConfiguration::initialiseHandlers() {
     testConnectionHandler testConnectionHandler(router);
     curtainsHandler curtainsHandler(router);
+    secretDoorHandler secretDoorHandler(router);
     automaticDoorLockHandler automaticDoorLockHandler(router);
     morningAlarmHandler morningAlarmHandler(router);
 }
