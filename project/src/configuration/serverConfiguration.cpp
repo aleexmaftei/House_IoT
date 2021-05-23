@@ -3,6 +3,7 @@
 #include "../handlers/headers/testConnectionHandler.h"
 #include "../handlers/headers/secretDoorHandler.h"
 #include "../handlers/headers/automaticDoorLockHandler.h"
+#include "../handlers/headers/automaticLightsHandler.h"
 
 serverConfiguration::serverConfiguration(Address addr, size_t thr = 2) {
     httpEndpoint = std::make_shared<Http::Endpoint>(addr);
@@ -28,4 +29,5 @@ void serverConfiguration::initialiseHandlers() {
     curtainsHandler curtainsHandler(router);
     secretDoorHandler secretDoorHandler(router);
     automaticDoorLockHandler automaticDoorLockHandler(router);
+    automaticLightsHandler automaticLightsHandler(router);
 }
