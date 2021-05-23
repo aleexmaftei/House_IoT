@@ -7,7 +7,6 @@
 
 class automaticDoorLockHandler final : public baseRoute {
     automaticDoorLockModel doorLock;
-    Lock doorLock_mutex;
 
     void setupHandlerRoutes(Router &) override;
 
@@ -23,4 +22,4 @@ public:
     explicit automaticDoorLockHandler(Router &);
 };
 
-#endif //HOUSE_IOT_AUTOMATICDOORLOCKHANDLER_H
+#endif

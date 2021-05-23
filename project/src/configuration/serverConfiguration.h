@@ -7,6 +7,7 @@
 #include <utility>
 #include <pistache/endpoint.h>
 #include <pistache/router.h>
+#include <mosquitto.h>
 #include "../../lib/nlohmann/json.hpp"
 #include "../../lib/crossguid/include/crossguid/guid.hpp"
 
@@ -25,7 +26,7 @@ protected:
 public:
     explicit serverConfiguration(Address, size_t);
 
-    void start();
+    void startHttp();
 
     void initialiseHandlers();
 
