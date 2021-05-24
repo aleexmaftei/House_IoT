@@ -153,7 +153,7 @@ Open a new shell (ctrl+shift+T) and start a _broker_ at one of the given topics 
 ```shell
 mosquitto_sub -t curtains/currentUserSettings -C 1
 ```
-Run the server/application from CLion and then check the terminal for the server response.
+Run the server/application from CLion and then check the terminal for the server response. As well, check the output from CLion to see the changes that have been made on the maximum temperature inside the room before opening the windows.
 
 ---
 
