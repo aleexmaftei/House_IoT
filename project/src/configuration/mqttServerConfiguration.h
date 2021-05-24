@@ -21,6 +21,8 @@ public:
     static void messageMqttWithNewProcess(bool useDefaultMqttMessages, const char *topic, const json &jsonToPublish);
 
     static void startMqttPublisher(bool useDefaultMqttMessages, const char *topic, const json &jsonToPublish);
+
+    static void startMqttSubscriber(struct mosquitto *mosq);
 };
 
 
