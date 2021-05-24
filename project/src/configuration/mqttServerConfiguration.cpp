@@ -80,7 +80,7 @@ void mqttServerConfiguration::startMqttSubscriber(mosquitto *mosq) {
     printf("Mosquitto subscriber has been stopped.\n");
 }
 
-void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_message *msg) {
+void mqttServerConfiguration::on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_message *msg) {
     printf("Changing internal maximum room temp. to %s.\n", (char *) msg->payload);
 
     json data = serverUtils::readJson(windowsDataPath);

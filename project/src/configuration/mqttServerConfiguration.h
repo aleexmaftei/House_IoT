@@ -23,6 +23,8 @@ public:
     static void startMqttPublisher(bool useDefaultMqttMessages, const char *topic, const json &jsonToPublish);
 
     static void startMqttSubscriber(struct mosquitto *mosq);
+
+    static void on_message(struct mosquitto *, void *, const struct mosquitto_message *);
 };
 
 
