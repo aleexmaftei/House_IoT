@@ -137,7 +137,7 @@ To use [MQTT](https://en.wikipedia.org/wiki/MQTT) requests we need a _broker_ an
 ## Topics (interacting with the device):
 1. Get user curtains current settings: ```curtains/currentUserSettings```;
 2. Check if the secret door is open: ```secretDoor/isSecretDoorOpen```;
-3. Check if the entrance door is open: ```automaticDoorLock/isLocked```.
+3. Change room's maximum internal temperature before opening windows: ```windows/35/C```.
 
 ### Run instructions
 First we need to make sure that we have the _Mosquitto_ service is running in the background:
