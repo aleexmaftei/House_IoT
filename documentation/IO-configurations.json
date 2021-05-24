@@ -1,0 +1,439 @@
+{
+    "device-name": "House 2.0",
+    "device-type": "House",
+    "buffers-count": 12,
+    "input-buffers":{
+        "1":
+        {
+            "token-delimitators": ",",
+            "protocol": "HTTP",
+            "header-type": "text/plain",
+            "prefix": "curl -XPOST 'http://127.0.0.1:9080/curtains'",
+            "buffer-tokens":[
+              {
+                  "name":"open",
+                  "description":"Fully open your curtains.",
+                  "optional": false
+              },
+              {
+                  "name":"close",
+                  "description":"Fully close your curtains.",
+                  "optional": false
+              },
+              
+              {
+                  "name":"openPercentage",
+                  "description":"How much do you want your curtains to be open (in percentage).",
+                  "token-type":"double", 
+                  "byte-size":8, 
+                  "regex-rule": "/^(0\.[1-9]|[1-9][0-9]{0,2}(\.[1-9])?)$/",
+                  "optional": false
+              }]
+        
+        }
+        "2":
+        {
+            "token-delimitators": ",",
+            "protocol": "HTTP",
+            "body-type": "json",
+            "prefix": "curl -XPOST 'http://127.0.0.1:9080/secretDoor'",
+            "buffer-tokens":[
+              {
+                  "name":"open",
+                  "description":"Open door for you secret room.",
+                  "token-type":"json/struct",
+                  "byte-size": 7,
+                  "optional": false,
+                  "body": [{
+                  		        "name":"pinCode",
+                  		        "description":"Insert your door pin code.",
+                  		        "token-type":"unsigned", 
+                  		        "byte-size":4, 
+                  		        "regex-rule": "^[+]?\d+([.]\d+)?$",
+                  		        "optional": false
+                  		    }]
+              },
+              {
+                  "name":"close",
+                  "description":"Close door for you secret room.",
+                  "token-type":"boolean",
+                  "optional": false
+              },
+              
+              {
+                  "name":"changePin",
+                  "description":"Insert your change pin code, your door pin code and your new pin door code to change it to a new one.",
+                  "token-type":"json/struct", 
+                  "byte-size":54,
+                  "optional": false,
+                  "body": [{
+                  		        "name":"pinCode",
+                  		        "description":"Insert your old door pin code.",
+                  		        "token-type":"unsigned", 
+                  		        "byte-size":4, 
+                  		        "regex-rule": "^[+]?\d+([.]\d+)?$",
+                  		        "optional": false
+                  		    },
+                  		    {
+                  		        "name":"changePinCode",
+                  		        "description":"Insert your change door pin code.",
+                  		        "token-type":"unsigned", 
+                  		        "byte-size":4, 
+                  		        "regex-rule": "^[+]?\d+([.]\d+)?$",
+                  		        "optional": false
+                  		    },
+                  		    {
+                  		        "name":"newPinCode",
+                  		        "description":"Insert your door pin code.",
+                  		        "token-type":"unsigned", 
+                  		        "byte-size":4, 
+                  		        "regex-rule": "^[+]?\d+([.]\d+)?$",
+                  		        "optional": false
+                  		    }]
+              }]
+        
+        }
+        "3":
+        {
+            "token-delimitators": ",",
+            "protocol": "HTTP",
+            "body-type": "application/x-www-form-urlencoded",
+            "prefix": "curl -XPOST 'http://127.0.0.1:9080/doorLock'",
+            "buffer-tokens":[
+              {
+                  "name":"lock",
+                  "description":"Lock your door.",
+                  "optional": false
+              },
+              {
+                  "name":"unlock",
+                  "description":"Unlock your door.",
+                  "optional": false
+              },
+              {
+                  "name":"reset",
+                  "description":"Reset your locking time hour for the entrance door.",
+                  "optional": false
+              },
+              {
+                  "name":"setLockTime",
+                  "description":"Set your automatic locking time.",
+                  "token-type":"json/struct", 
+                  "byte-size":8,
+                  "optional": false,
+                  "query-string": [{
+                          		        "name":"hour",
+                          		        "description":"Set the hour for locking.",
+                          		        "token-type":"unsigned", 
+                          		        "byte-size":4, 
+                          		        "regex-rule": "^[+]?\d+([.]\d+)?$",
+                          		        "optional": false
+                          		    },
+                          		    {
+                          		        "name":"minutes",
+                          		        "description": "Set the minutes within the hour for locking",
+                          		        "token-type":"unsigned",
+                          		        "byte-size":4,
+                          		        "regex-rule": "^[+]?\d+([.]\d+)?$",
+                          		        "optional": false
+                          		    }]
+              }]
+        
+        }
+        "4":
+        {
+            "token-delimitators": ",",
+            "protocol": "HTTP",
+            "body-type": "text/plain",
+            "prefix": "curl -XPOST 'http://127.0.0.1:9080/lights'",
+            "buffer-tokens":[
+              {
+                  "name":"turnOn",
+                  "description":"Turn on your lights.",
+                  "optional": false
+              },
+              {
+                  "name":"turnOff",
+                  "description":"Turn off your lights.", 
+                  "optional": false
+              },
+              {
+                  "name":"color",
+                  "description":"Change color of your lights.",
+                  "token-type":"string",
+                  "regex-rule": "[blue|red|white|green]",
+                  "optional": false
+              }]
+        
+        }
+        "5":
+        {
+            "token-delimitators": ",",
+            "protocol": "HTTP",
+            "body-type": "text/plain",
+            "prefix": "curl -XPOST 'http://127.0.0.1:9080/morningAlarm'",
+            "buffer-tokens":[
+              {
+                  "name":"setDismissable",
+                  "description":"Set what alarms can be dismissable.",
+                  "token-type":"boolean",
+                   "regex-rule": "[true|false]",
+                  "optional": false,
+                  "query-string": [{
+                          		        "name":"dismissable",
+                          		        "description":"Set the hour for locking.",
+                          		        "token-type":"boolean", 
+                          		        "byte-size":1, 
+                          		        "optional": false
+                          		    }]
+              },
+              {
+                  "name":"addAlarm",
+                  "description":"Add a new alarm.",
+                  "token-type":"vector<struct>", 
+                  "optional": false,
+                  "query-string": [{
+                          		        "name":"hour",
+                          		        "description":"Set the hour for alarm.",
+                          		        "token-type":"unsigned", 
+                          		        "byte-size":4,
+                          		        "optional": false
+                          		    },
+                          		    {
+                          		        "name":"minutes",
+                          		        "description":"Set the minutes for alarm.",
+                          		        "token-type":"unsigned",
+                          		        "byte-size":4, 
+                          		        "optional": false
+                          		    },
+                          		    {
+                          		        "name":"duration",
+                          		        "description":"Set the duration for alarm.",
+                          		        "token-type":"unsigned",
+                          		        "byte-size":4, 
+                          		        "optional": false
+                          		    }]
+              },
+              
+              {
+                  "name":"removeAlarm",
+                  "description":"Remove an alarm.",
+                  "token-type":"json/struct",
+                  "byte-size":8,
+                  "optional": false,
+                  "query-string": [{
+                          		        "name":"hour",
+                          		        "description":"Set the hour for the alarm to remove.",
+                          		        "token-type":"unsigned", 
+                          		        "byte-size":4,
+                          		        "optional": false
+                          		    },
+                          		    {
+                          		        "name":"minutes",
+                          		        "description":"Set the minutes for the alarm to remove.",
+                          		        "token-type":"unsigned",
+                          		        "byte-size":4, 
+                          		        "optional": false
+                          		    }]
+              }]
+      
+        }
+        "6":
+        {
+            "token-delimitators": ",",
+            "protocol": "HTTP",
+            "body-type": "application/x-www-form-urlencoded",
+            "prefix": "curl -XPOST 'http://127.0.0.1:9080/windowsLock'",
+            "buffer-tokens":[
+              {
+                  "name":"openWindows",
+                  "description":"Open your windows.",
+                  "token-type":"boolean", 
+                  "optional": false
+              },
+              {
+                  "name":"closeWindows",
+                  "description":"Close your windows.",
+                  "token-type":"boolean", 
+                  "optional": false
+              },
+              {
+                  "name":"windowsLock",
+                  "description":"Change color of your lights.",
+                  "token-type":"struct", 
+                  "optional": false,
+                  "query-string": [{
+                          		        "name":"temp",
+                          		        "description":"Set the outside temperature.",
+                          		        "token-type":"unsigned", 
+                          		        "byte-size":4,
+                          		        "optional": false
+                          		    },
+                          		    {
+                          		        "name":"tempMax",
+                          		        "description":"Set the maximum interior temperature for when the windows will open to chill the room.",
+                          		        "token-type":"unsigned",
+                          		        "byte-size":4, 
+                          		        "optional": false
+                          		    },
+                          		    {
+                          		        "name":"scale",
+                          		        "description":"The scale you use (Fahrenheit or Celsius).",
+                          		        "token-type":"char",
+                          		        "byte-size":1, 
+                          		        "optional": false
+                          		    }]
+              }]
+        
+        }
+        "7":
+        {
+            "token-delimitators": ",",
+            "protocol": "MQTT",
+            "topic": "windows",
+            "message-type": "subscriber",
+            "buffer-tokens":[
+            {
+                "name":"roomMaxTemperature",
+                "description":"Set your room max temperature.",
+                "token-type":"struct", 
+                "byte-size":5,
+                "optional": false,
+                "query-string": [{
+                		        "name":"temperature",
+                		        "description":"Set the maximum internal room temperature.",
+                		        "token-type":"unsigned", 
+                		        "byte-size":4, 
+                		        "regex-rule": "^[+]?\d+([.]\d+)?$",
+                		        "optional": false
+                		    },
+                		    {
+                		        "name":"scale",
+                		        "description": "Set the scale that you use.",
+                		        "token-type":"char",
+                		        "byte-size":1,
+                		        "regex-rule": "[F|C]",
+                		        "optional": false
+                		    }]
+            }]
+        
+        }
+    },
+    
+    "output-buffers":{
+	    "1":{
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -XGET 'http://127.0.0.1:9080/windowsLock'",
+            "buffer-tokens":[
+            {
+                "name":"userSettings",
+                "description":"Get your current settings for your windows.",
+                "token-type":"bool", 
+                "optional": false
+            }]
+            
+        },
+        "2":{
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -XGET 'http://127.0.0.1:9080/morningAlarm'",
+            "buffer-tokens":[
+            {
+                "name":"info",
+                "description":"Get informations on how to use the morning alarm.",
+                "token-type":"string",
+                "token-type":"bool", 
+                "optional": false
+            }]
+            
+        },
+        "3": {
+            "token-delimitators": "",
+            "protocol": "HTTP",
+            "prefix": "curl -XGET 'http://127.0.0.1:8080/doorLock'",
+            "buffer-tokens":[
+            {
+                "name":"info",
+                "description":"Get informations on how to use the entrance door lock.",
+                "token-type":"string", 
+                "byte-size":8, 
+                "regex-rule": "^(100|[1-9]?[0-9])$", 
+                "optional": false
+            }
+            ]
+        },
+        
+	      "4":
+        {
+            "token-delimitators": ",",
+            "protocol": "MQTT",
+            "topic": "curtains",
+            "message-type": "publish",
+            "output-buffer-tokens":[
+            {
+                "name":"currentUserSettings",
+                "description":"Get your curtains user settings.",
+                "token-type":"boolean", 
+                "byte-size":1,
+                "regex-rule": "[true|false]",
+                "optional": false,
+                "response": [{
+                		        "name":"areCurtainsClosed",
+                		        "description":"See if curtains are closed.",
+                		        "token-type":"boolean", 
+                		        "byte-size":1, 
+                		        "regex-rule": "[true|false]",
+                		        "optional": false
+                		    },
+                		    {
+                		        "name":"curtainsOpenPercentage",
+                		        "description": "Check what percentage is set for the curtains to be open.",
+                		        "token-type":"double",
+                		        "byte-size":4,
+                		        "regex-rule": "^([0-9]{1,2}){1}(\.[0-9]{1,2})?$",
+                		        "optional": false
+                		    }]
+            }
+            ]
+        
+        },
+        "5":
+        {
+            "token-delimitators": ",",
+            "protocol": "MQTT",
+            "topic": "secretDoor",
+            "message-type": "publish",
+            "output-buffer-tokens":[
+            {
+                "name":"isSecretDoorOpen",
+                "description":"Check if secret door is open.",
+                "token-type":"boolean", 
+                "byte-size":1,
+                "regex-rule": "[true|false]",
+                "optional": false,
+            }
+            ]
+        
+        },
+        "6":
+        {
+            "token-delimitators": ",",
+            "protocol": "MQTT",
+            "topic": "automaticDoorLock",
+            "message-type": "publish",
+            "output-buffer-tokens":[
+            {
+                "name":"isLocked",
+                "description":"Check if entrance door is locked.",
+                "token-type":"boolean", 
+                "byte-size":1,
+                "regex-rule": "[true|false]",
+                "optional": false,
+            }
+            ]
+        
+        }
+        
+    }
+}
