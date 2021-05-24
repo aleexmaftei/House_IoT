@@ -47,9 +47,9 @@ mqttServerConfiguration::startMqttPublisher(bool useDefaultMqttMessages, const c
         mosquitto_publish(mqttConnection, nullptr, "secretDoor/isSecretDoorOpen", message.size(), message.c_str(),
                           0, true);
 
-        // check if entrance door is unlocked
-        message = serverUtils::readJson(automaticDoorLockDataPath)["isLocked"].dump();
-        mosquitto_publish(mqttConnection, nullptr, "automaticDoorLock/isLocked", message.size(), message.c_str(),
+        // change room max temperature to 35C
+        message = "35";
+        mosquitto_publish(mqttConnection, nullptr, "windows/35/C", message.size(), message.c_str(),
                           0, true);
     } else {
         /// custom actions
@@ -61,8 +61,36 @@ mqttServerConfiguration::startMqttPublisher(bool useDefaultMqttMessages, const c
         }
     }
 
+    startMqttSubscriber(mqttConnection);
+
     mosquitto_disconnect(mqttConnection);
     mosquitto_destroy(mqttConnection);
 
     mosquitto_lib_cleanup();
+}
+
+void mqttServerConfiguration::startMqttSubscriber(mosquitto *mosq) {
+    mosquitto_subscribe(mosq, nullptr, "windows/35/C", 0);
+    mosquitto_message_callback_set(mosq, &on_message);
+
+    mosquitto_loop_start(mosq);
+    printf("Press Enter to close mosquitto subscriber...\n");
+    getchar();
+    mosquitto_loop_stop(mosq, true);
+    printf("Mosquitto subscriber has been stopped.\n");
+}
+
+void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_message *msg) {
+    printf("Changing internal maximum room temp. to %s.\n", (char *) msg->payload);
+
+    json data = serverUtils::readJson(windowsDataPath);
+    auto areAllWindowsClosed = data["areAllWindowsClosed"];
+    auto isRaining = data["isRaining"];
+
+    data = {
+            {"areAllWindowsClosed",   areAllWindowsClosed},
+            {"isRaining",             isRaining},
+            {"insidePrefTemperature", serverUtils::convertStringToNumber<unsigned>((char *) msg->payload)}
+    };
+    serverUtils::writeJson(windowsDataPath, data);
 }

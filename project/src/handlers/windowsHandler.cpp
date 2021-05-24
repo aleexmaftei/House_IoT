@@ -220,6 +220,3 @@ void windowsHandler::closeWindows(const Rest::Request &request, Http::ResponseWr
     windowsLock.writeJsonData();
     response.send(Http::Code::Ok, jsonResponse.dump(2));
 }
-
-
-
